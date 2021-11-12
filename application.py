@@ -190,6 +190,9 @@ def upload():
 
 
 
-if __name__ == '__main__':
-      app.run(host=os.getenv('IP', '127.0.0.1'), debug=True,
-            port=int(os.getenv('PORT', 4000)))
+# if __name__ == '__main__':
+#       app.run(host=os.getenv('IP', '127.0.0.1'), debug=True,
+#             port=int(os.getenv('PORT', 4000)))
+
+if __name__ == "__main__":
+	app.run(debug=True)
