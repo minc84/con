@@ -1,0 +1,68 @@
+name: aws-con
+env:
+  BACKET_NAME: "my-con-1"
+  EB_APP     : "my-con"
+  EP_APP_ENV : "Mycon-env"
+  DEPLOY_PACKADGE : "my_con_1_${{ github.sha }}.zip"
+  AWS_REGION_NAME : "eu-north-1"
+  
+
+
+
+on:
+  push:
+    branches:
+      - master
+      
+jobs:
+  my-cl-part:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: git clone repo
+        uses: actions/checkout@v1
+        
+      - name: Create zip deployment
+        run : zip -r ${{ env.DEPLOY_PACKADGE }} ./ -x *.git*
+        
+        
+      - name: Config my aws
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id     : ${{ secrets.MY_AWS_ACCESS_KEY }}
+          aws-secret-access-key : ${{ secrets.MY_AWS_SECRET_KEY }}
+          aws-region            : ${{ env.AWS_REGION_NAME}}
+        
+      - name: Deployment to s3 backet
+        run : aws s3 cp ${{ env.DEPLOY_PACKADGE }} s3://${{ env.BACKET_NAME }}/  
+        
+      - name: Happy Message CI
+        run : echo "successfully"
+        
+
+  my-cd-part:
+    runs-on: ubuntu-latest
+    needs: [my-cl-part]
+    
+    
+    steps:
+      - name: Config my aws
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id     : ${{ secrets.MY_AWS_ACCESS_KEY }}
+          aws-secret-access-key : ${{ secrets.MY_AWS_SECRET_KEY }}
+          aws-region            : ${{ env.AWS_REGION_NAME}}
+          
+      - name: Creaie EB
+        run : |
+          aws elasticbeanstalk create-application-version \
+          --application-name ${{ env.EB_APP }} \
+          --source-bundle S3Bucket="${{ env.BACKET_NAME }}",S3Key="${{ env.DEPLOY_PACKADGE }}" \
+          --version-label "Ver-${{ github.sha }}" \
+          --description "CommitSHA-${{ github.sha }}"
+          
+      - name: Deploy EB 
+        run : aws elasticbeanstalk update-environment --environment-name ${{ env.EP_APP_ENV }} --version-label "Ver-${{ github.sha }}"
+      
+      - name: Happy Message CD
+        run : echo "successfully"
