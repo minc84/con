@@ -37,7 +37,7 @@ from flask_admin import Admin
 # manager=Manager(app)
 # #manager.add_command('db', MigrateCommand)
 
-login_manager = LoginManager(app)
+login_manager = LoginManager(application)
 
 
 # login_manager.login_view = 'login'
@@ -49,7 +49,7 @@ def load_user(user_id):
 #since the user_id is just the primary key of our user table, use it in the query for the user
 	return Users.query.get(int(user_id))
 
-admin = Admin(app)
+admin = Admin(application)
 
 admin.add_view(CongacAdmin(Congac, db.session))
 admin.add_view(FactoryAdmin(Factory, db.session))
@@ -80,8 +80,8 @@ admin.add_view(UsersAdmin(Users, db.session))
 
 
 
-@app.route('/', methods=("POST", "GET"))
-@app.route('/index', methods=("POST", "GET"))
+@application.route('/', methods=("POST", "GET"))
+@application.route('/index', methods=("POST", "GET"))
 def index():
 
 	pos = db.session.query(Congac).all()
@@ -91,7 +91,7 @@ def index():
 	return render_template("index.html", title="Главная", pos = pos)
 
 @login_required
-@app.route('/congac/<alias>')
+@application.route('/congac/<alias>')
 def showPost(alias):
 	alias = alias
 
@@ -99,7 +99,7 @@ def showPost(alias):
 	return render_template("post.html", title="Коньяк", post = post)
 
 
-@app.route('/factory/<alias_factory>')
+@application.route('/factory/<alias_factory>')
 def showFactory(alias_factory):
 	alias_factory = alias_factory
 	factory = db.session.query(Factory).filter(Factory.slug_factory == alias_factory)# завод
@@ -107,7 +107,7 @@ def showFactory(alias_factory):
 	country = db.session.query(Factory,Country).join(Country, Factory.id_country == Country.id_country).filter(Factory.slug_factory == alias_factory)
 	return render_template("factory.html", title="Завод", factory = factory, congac = congac, country = country)
 
-@app.route('/country/<alias_country>')
+@application.route('/country/<alias_country>')
 def showCountry(alias_country):
 	alias_country = alias_country
 	country = db.session.query(Country).filter(Country.slug_country == alias_country) 
@@ -155,7 +155,7 @@ def showCountry(alias_country):
 # def profile():
 #     return render_template('profile.html', name=current_user.user_name, mail =current_user.user_mail )
 
-@app.route("/register", methods=["POST", "GET"])
+@application.route("/register", methods=["POST", "GET"])
 def register():
 	form = RegisterForm()
 	if form.validate_on_submit():
@@ -170,14 +170,13 @@ def register():
 	return render_template("register.html", title="Регистрация", form=form)
 
 
-
-@app.route('/files/<filename>')
+@application.route('/files/<filename>')
 def uploaded_files(filename):
 	path = app.config['UPLOADED_PATH']
 	return send_from_directory(path, filename)
 
 
-@app.route('/upload', methods=['POST'])
+@application.route('/upload', methods=['POST'])
 def upload():
 	f = request.files.get('upload')
 	extension = f.filename.split('.')[-1].lower()
@@ -195,4 +194,4 @@ def upload():
 #             port=int(os.getenv('PORT', 4000)))
 
 if __name__ == "__main__":
-	app.run(debug=True)
+	application.run(debug=True)
