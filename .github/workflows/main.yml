@@ -3,7 +3,7 @@ env:
   BACKET_NAME: "my-con-1"
   EB_APP     : "my-con"
   EP_APP_ENV : "Mycon-env"
-  DEPLOY_PACKADGE : "flask_app_${{ github.sha }}.zip"
+  DEPLOY_PACKADGE : "my_con_1_${{ github.sha }}.zip"
   AWS_REGION_NAME : "eu-north-1"
   
 
