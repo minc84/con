@@ -1,0 +1,18 @@
+`{% extends 'base.html' %}
+	
+	
+
+	{% block content %}
+   
+
+    
+{% for c in country %}
+ 
+	Страна: {{c.title_country}}<br>
+	Описание страны : {{ c.text_country|safe}}<br/>
+<br/>
+
+{% endfor %}
+
+
+{% endblock content %}

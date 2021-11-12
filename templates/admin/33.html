@@ -1,0 +1,51 @@
+{% extends 'admin/base.html' %}
+{% block access_control %}
+
+{% if current_user.is_authenticated %}
+<div class="btn-group pull-right">
+    <a class="btn" href="{{ url_for('logout_page') }}"> - Log out222</a>
+</div>
+{% endif %}
+{% endblock %}
+
+
+
+
+<h1>Flask-Admin example</h1>
+        <p class="lead">
+            Authentication
+        </p>
+        <p>
+            This example shows how you can use Flask-Login for authentication. It is only intended as a basic demonstration.
+        </p>
+        {% else %}
+
+
+{% for cat, msg in get_flashed_messages(True) %}
+<div class="flash {{cat}}">{{msg}}</div>
+{% endfor %}
+<form action="" method="post" class="form-contact">
+{{ forms.hidden_tag() }}
+{{ forms.email.label() }} 
+
+{% for field in forms if field.name not in ['csrf_token', 'remember', 'submit'] -%}
+         {{ field.label() }} 
+         {% if field.errors %}
+                   {{ field(class="invalid") }}
+         <span class="invalid-feedback">
+                   {% for e in field.errors %}
+                   {{ e }}
+                   {% endfor %}
+         </span>
+         {% else %}
+                   {{ field() }}
+         {% endif %}
+{% endfor %}
+
+<br/>
+{{ forms.remember.label() }} {{ forms.remember() }}
+{{ forms.submit() }}
+<hr align=left width="300px">
+<a href="{{url_for('register')}}">Регистрация</a>
+</form>
+{% endif %}

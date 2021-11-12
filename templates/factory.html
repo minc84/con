@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    
+{% for f in factory %}
+ 
+	Завод: {{f.title_factory}}<br>
+	Описание Завода : {{ f.text_factory|safe}}<br/>
+	<a href="{{f.site_factory}}">{{f.site_factory}}</a><br/>
+
+{# Производитель: <a href="{{ url_for('showFactory',alias_factory=f.slug_factory) }}"> {{f.title_factory}}</a> #}
+{% endfor %}
+{% for f,c in congac %}
+<br/>
+	Коньяк: <a href="{{ url_for('showPost', alias=c.slug_cognac) }}">{{c.title_cognac}}</a><br/>
+
+    {% endfor %}  
+
+ {% for f,c in country %}
+<br/>
+Страна: <a href="{{ url_for('showCountry',alias_country=c.slug_country) }}"> {{c.title_country}}</a>
+
+    {% endfor %}  
+{% endblock content %}

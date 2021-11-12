@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1></h1>
+
+{{ super() }}
+{% for cat, msg in get_flashed_messages(True) %}
+<div class="flash {{cat}}">{{msg}}</div>
+{% endfor %}
+<form action="" method="post" class="form-contact">
+{{ forms.hidden_tag() }}
+{{ forms.email.label() }} 
+
+{% for field in forms if field.name not in ['csrf_token', 'remember', 'submit'] -%}
+         {{ field.label() }} 
+         {% if field.errors %}
+                   {{ field(class="invalid") }}
+         <span class="invalid-feedback">
+                   {% for e in field.errors %}
+                   {{ e }}
+                   {% endfor %}
+         </span>
+         {% else %}
+                   {{ field() }}
+         {% endif %}
+{% endfor %}
+
+<br/>
+{{ forms.remember.label() }} {{ forms.remember() }}
+{{ forms.submit() }}
+<hr align=left width="300px">
+<a href="{{url_for('register')}}">Регистрация</a>
+</form>
+{% endblock %}

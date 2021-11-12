@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+	
+	
+
+	{% block content %}
+   
+
+    
+{% for f,c in post %}
+ 
+	Коньяк: {{c.title_cognac}}<br>
+	Описание Коньяка : {{ c.text_cognac|safe}}<br/>
+	Производитель: <a href="{{ url_for('showFactory',alias_factory=f.slug_factory) }}"> {{f.title_factory}}</a>
+
+       
+
+<br/>
+{% endfor %}
+</ul>
+{% endblock content %}

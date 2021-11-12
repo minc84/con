@@ -1,0 +1,11 @@
+`{% extends 'base.html' %}
+	
+	{% block content %}
+<a href="{{ url_for('logout') }}" class="navbar-item">
+                                Logout
+                            </a>
+<h1 class="title">
+  Welcome, {{ name }}!
+</h1>
+   {{mail}}
+{% endblock content %}

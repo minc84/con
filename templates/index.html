@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+	
+	
+
+	{% block content %}
+    <h1>HELLO my friends</h1>
+
+    
+{% for c in pos %}
+ 
+	Коньяк:<a href="{{ url_for('showPost', alias=c.slug_cognac) }}"> {{c.title_cognac}}</a><br>
+	Описание Коньяка : {{ c.text_cognac[:100]|safe}}<br/>
+       
+
+<br/>
+{% endfor %}
+</ul>
+{% endblock content %}
