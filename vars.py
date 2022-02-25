@@ -11,10 +11,10 @@ application  = Flask(__name__)
 #pas1 = sha256_crypt.encrypt("11111111")
 
 basedir = os.path.abspath(os.path.dirname(__file__))
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://user:11111111@localhost/congac'
+#application.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://user:11111111@localhost/congac'
 application.config['SECRET_KEY'] = "aadadfasdasd"
 application.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-application.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://user2:11111111@ec2-16-170-7-86.eu-north-1.compute.amazonaws.com/congac'
+application.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://frodo:11111111@ec2-13-51-200-26.eu-north-1.compute.amazonaws.com/congac'
 
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://admin:Lokomotiv1@database-1-instance-1.chv893ja4f5u.eu-north-1.rds.amazonaws.com/congac'
 

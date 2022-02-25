@@ -1,0 +1,39 @@
+terraform 
+
+1)дя БД создаем сервак где храняться базы и доступ с портами базы и ssh
+
+для сайта ec2 создаем flask apache2 wsqi nqix ++ django
+по возможнасти tomcat
+jenkins c гит ставить обновления
+
+
+1)создаем сервер
+
+2) созаем эластик бин для сайта
+
+для докера создаем два сервака для нод
+
+https://github.com/dm4rnde/docker-flask-app-base-apache2-wsgi-py3/blob/master/Dockerfile
+
+https://medium.com/nerd-for-tech/installing-jenkins-using-an-ansible-playbook-2d99303a235f
+https://linuxiac.com/apache-with-tomcat/
+
+создаем мастер сервер (на нем jenkins ansible ssh docker)
+устанавливаем докер с автоскале и т.д. 
+
+https://pyliaorachel.github.io/blog/tech/system/2017/07/07/flask-app-with-gunicorn-on-nginx-server-upon-aws-ec2-linux.html
+
+https://the-bosha.ru/2017/01/04/zapusk-flask-prilozheniia-c-uwsgi-virtualenv-i-nginx/
+
+--------------------------------------------------------------------
+
+Master
+
+ssh на другие сервера
+master jenkins
+master ansible
+master docker (eds cliaws )
+устанавливаем порты
+лелаем на бакете сайт с резюме подробный
+
+
